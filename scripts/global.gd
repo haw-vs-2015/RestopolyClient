@@ -1,17 +1,17 @@
 extends Node
 
-
+var playerid = null
 var playerName = null
 var currentGameId = null
 var myTurn = false;
 var money = 0
 var cards = []
 var responsePort = 3560
-var ha_proxy = "31.16.248.28"
+var ha_proxy = "31.16.251.216"
 var ha_proxy_port = 4567
 var playerUri ="http://" + IP.get_local_addresses()[1] + ":" + str(responsePort)
+var players = []
 #var yellow_pages = "https://vs-docker.informatik.haw-hamburg.de/ports/8053/services"
-
 
 
 var loader

@@ -2,9 +2,11 @@
 extends Panel
 
 var controller = null
+var global = null
 
 func _ready():
 	
+	global = get_node("/root/global")
 	controller = get_node("/root/lobby_controller")
 	
 	get_node("ReadyButton").connect("pressed",self,"_onReadyPressed")
@@ -17,8 +19,8 @@ func _ready():
 
 func refresh():
 
-	print(controller.getGame())
-	var players = controller.getGame()["players"]
+	#print(controller.getGame())
+	var players = global.players
 	
 	var allPlayersReady = true
 	get_node("ItemList").clear()

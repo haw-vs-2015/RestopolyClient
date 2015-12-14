@@ -2,9 +2,7 @@
 extends WindowDialog
 
 var selected_item = -1
-
 var global = null
-
 var controller = null
 
 func _ready():
@@ -25,7 +23,7 @@ func _ready():
 	get_close_button().remove_and_skip()
 
 
-
+	
 func join_game():
 	
 	
@@ -33,7 +31,6 @@ func join_game():
 		global.setCurrentGameId(get_node("ItemList").get_item_text(selected_item))
 		controller._join_game()
 		global.goto_scene("res://lobby.scn")
-
 
 func refresh():
 	

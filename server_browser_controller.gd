@@ -3,15 +3,27 @@ extends Node
 
 var global = null
 var http = null
+var controller_lobby = null
 
 func _ready():
 	
+	get_node("/root/response_server").add_service("id", self)
 	global = get_node("/root/global")
 	http = get_node("/root/http")
-
-
-func get_games():
 	
+func handle_request(verb, url, params, body_map, client):
+	if "POST" == verb:
+		if "/id" == url:
+			global.playerid = body_map["id"]
+	pass
+
+func get_game():
+
+	var gameId = global.getCurrentGameId()
+	var response = http.get("/games/" + str(gameId))
+	return response
+	
+func get_games():
 	
 	#print("GET GAMES TRIGGERED")
 	#print("ServerAdress  = " + serverAdress)
@@ -27,11 +39,16 @@ func _join_game():
 	var playerID = playerName.to_lower()
 	var gameId = global.getCurrentGameId()
 
-	var response = http.put("/games/" + str(gameId) +  "/players/" + playerID + "?name=" + playerName + "&uri=" + playerUri)
+	var response = http.put("/games/" + str(gameId) +  "/players/" + global.playerid + "?name=" + playerName + "&uri=" + playerUri)
+	
+	#TODO player name und id trennen! probleme bei spieler leaven und in mehreren spielen gleichzeitig sein
+	
+	
+	global.players = get_game()["players"]
 	
 	#join lobby chat
 	var a = "/messages/subscribe/lobby" + str(gameId)
-	var b = { "name": playerName,
+	var b = { "id": global.playerid,
 	          "uri": playerUri
 	         }.to_json()
 	
@@ -60,7 +77,7 @@ func _create_game():
 	
 	#join lobby chat
 	var a = "/messages/subscribe/lobby" + str(gameId)
-	var b = { "name": playerName,
+	var b = { "id": global.playerid,
 	          "uri": playerUri
 	         }.to_json()
 	

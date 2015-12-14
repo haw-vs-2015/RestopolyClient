@@ -29,7 +29,7 @@ func _roll():
 	for field in new_Field["board"]["fields"]:
 		if field["players"] != [] :
 			for player in field["players"]:
-				if player["id"] == global.getPlayerName().to_lower() : 
+				if player["id"] == global.playerid: 
 					print("---------------------------------------------------" + str(player["position"]))
 					get_parent().get_node("Board").put_player_on_field(get_node("/root/global").getPlayerName(),player["position"])
 	get_node("DiceSprite").set_texture(load("res://assets/sprites/dice/" + str(dices["roll1"]["number"]) + ".png"))

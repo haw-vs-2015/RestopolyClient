@@ -28,11 +28,10 @@ func rollDice():
 	return rolls 
 
 
-
 func send_roll_to_server(rolls):
 
 
-	var playerId = global.getPlayerName().to_lower()
+	var playerId = global.playerid
 	var gameId = global.getCurrentGameId()
 	var adress = "/boards/" + gameId  +  "/players/" + playerId +  "/roll"
 	var new_board = http.post(adress, rolls.to_json())

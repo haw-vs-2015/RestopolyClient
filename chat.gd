@@ -12,18 +12,18 @@ func _ready():
 func handle_request(verb, url, params, body_map, client):
 	if "POST" == verb:
 		if "/messages/send/lobby" + get_node("/root/global").currentGameId == url:
-			get_node("ItemList").add_item(body_map["name"] + ": " + body_map["payload"])
+			get_node("ItemList").add_item(body_map["id"] + ": " + body_map["payload"])
 	pass
 
 
 func _onSendPressed():
-	var playerid = get_node("/root/global").getPlayerName()
+	var playerid = get_node("/root/global").playerid
 	var gameid = get_node("/root/global").getCurrentGameId()
 	var playeruri = get_node("/root/global").playerUri
 	
 	var a = "/messages/send/lobby" + str(gameid)
 
-	var b = { "name":playerid,
+	var b = { "id":playerid,
 			  "reason":"message",
 			  "sourceURI":playeruri,
 			  "payload":get_node("LineEdit").get_text()
