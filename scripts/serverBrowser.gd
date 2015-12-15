@@ -17,7 +17,7 @@ func _ready():
 	global.setPlayerName(get_node("PlayerNameInput").get_text())
 	refresh()
 	
-	get_node("Refresh").connect("pressed",self,"refresh")
+	#get_node("Refresh").connect("pressed",self,"refresh")
 	get_node("Join").connect("pressed",self,"join_game")
 	get_node("CreateButton").connect("pressed",self,"_create_game")
 	get_close_button().remove_and_skip()
@@ -35,7 +35,7 @@ func join_game():
 func refresh():
 	
 	
-	var games = controller.get_games()
+	var games = global.games
 	get_node("ItemList").clear()
 	
 	for game in games:
@@ -52,3 +52,7 @@ func _on_ItemList_item_selected( index ):
 
 func _on_PlayerName_text_changed( text ):
 	global.setPlayerName(text)
+
+
+func _on_PollTimer_timeout():
+	refresh()

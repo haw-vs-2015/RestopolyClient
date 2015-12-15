@@ -15,6 +15,8 @@ func handle_request(verb, url, params, body_map, client):
 	if "POST" == verb:
 		if "/id" == url:
 			global.playerid = body_map["id"]
+		elif "/id/updategames" == url:
+			global.servers = body_map["games"]
 	pass
 
 func get_game():
@@ -36,10 +38,10 @@ func _join_game():
 	var playerName = global.getPlayerName()
 	var playerUri = global.playerUri
 	
-	var playerID = playerName.to_lower()
+	var playerID = global.playerid
 	var gameId = global.getCurrentGameId()
 
-	var response = http.put("/games/" + str(gameId) +  "/players/" + global.playerid + "?name=" + playerName + "&uri=" + playerUri)
+	var response = http.put("/games/" + str(gameId) +  "/players/" + playerID + "?name=" + playerName + "&uri=" + playerUri)
 	
 	#TODO player name und id trennen! probleme bei spieler leaven und in mehreren spielen gleichzeitig sein
 	
@@ -48,7 +50,7 @@ func _join_game():
 	
 	#join lobby chat
 	var a = "/messages/subscribe/lobby" + str(gameId)
-	var b = { "id": global.playerid,
+	var b = { "id": playerID,
 	          "uri": playerUri
 	         }.to_json()
 	
@@ -67,7 +69,7 @@ func _create_game():
 	var playerName = global.getPlayerName()
 	var playerUri = global.playerUri
 	
-	var playerID = playerName.to_lower()
+	var playerID = global.playerid
 	var gameId = global.getCurrentGameId()
 	
 	#var request = "/games/" + str(gameId) +  "/players/" + playerID + "?name=" + playerName + "&uri=" + playerUri
@@ -77,7 +79,7 @@ func _create_game():
 	
 	#join lobby chat
 	var a = "/messages/subscribe/lobby" + str(gameId)
-	var b = { "id": global.playerid,
+	var b = { "id": playerID,
 	          "uri": playerUri
 	         }.to_json()
 	

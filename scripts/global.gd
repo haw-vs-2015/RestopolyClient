@@ -11,6 +11,7 @@ var ha_proxy = "31.16.251.216"
 var ha_proxy_port = 4567
 var playerUri ="http://" + IP.get_local_addresses()[1] + ":" + str(responsePort)
 var players = []
+var games = []
 #var yellow_pages = "https://vs-docker.informatik.haw-hamburg.de/ports/8053/services"
 
 

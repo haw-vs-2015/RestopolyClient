@@ -6,8 +6,15 @@ var http = null
 
 func _ready():
 	
+	get_node("/root/response_server").add_service("games", self)
 	global = get_node("/root/global")
 	http = get_node("/root/http")
+	
+func handle_request(verb, url, params, body_map, client):
+	if "POST" == verb:
+		if "/games/start" == url:
+			startGame()
+	pass
 	
 func startGame():
 	
