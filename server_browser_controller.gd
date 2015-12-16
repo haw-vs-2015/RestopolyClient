@@ -15,8 +15,7 @@ func handle_request(verb, url, params, body_map, client):
 	if "POST" == verb:
 		if "/id" == url:
 			global.playerid = body_map["id"]
-		elif "/id/updategames" == url:
-			global.servers = body_map["games"]
+			http.subcribe("/messages/subscribe/updategames", global.playerid)
 	pass
 
 func get_game():
@@ -49,12 +48,8 @@ func _join_game():
 	global.players = get_game()["players"]
 	
 	#join lobby chat
-	var a = "/messages/subscribe/lobby" + str(gameId)
-	var b = { "id": playerID,
-	          "uri": playerUri
-	         }.to_json()
-	
-	http.post(a, b)
+	http.subcribe("/messages/subscribe/lobby" + str(gameId),playerID)
+	http.subcribe("/messages/subscribe/gamesstart" + str(gameId), global.playerid)
 	
 	return response
 
@@ -78,11 +73,6 @@ func _create_game():
 	var response = http.put("/games/" + str(gameId) +  "/players/" + playerID + "?name=" + playerName + "&uri=" + playerUri)
 	
 	#join lobby chat
-	var a = "/messages/subscribe/lobby" + str(gameId)
-	var b = { "id": playerID,
-	          "uri": playerUri
-	         }.to_json()
-	
-	http.post(a, b)
+	http.subcribe("/messages/subscribe/lobby" + str(gameId),playerID)
 	
 	return response

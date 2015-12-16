@@ -4,16 +4,9 @@ extends Node2D
 var map = {}
 
 func _ready():
-	get_node("/root/response_server").add_service("messages", self)
 	get_node("Button").connect("pressed",self,"_onSendPressed")
 	get_node("LineEdit").connect("input_event",self,"_onSendPressed")
-
-
-func handle_request(verb, url, params, body_map, client):
-	if "POST" == verb:
-		if "/messages/send/lobby" + get_node("/root/global").currentGameId == url:
-			get_node("ItemList").add_item(body_map["id"] + ": " + body_map["payload"])
-	pass
+	get_node("/root/chat_controller").chat_ui = self
 
 
 func _onSendPressed():

@@ -55,17 +55,15 @@ func post(adress, body):
 	
 	checkServerConnection(serverAdress,port)
 	http.request(HTTPClient.METHOD_POST,adress,headers, body)
-
-
+	
 	var output = {}
 	output.parse_json(getResponse())
 	#print("OUTPUT ------------> " + output.to_json())
 	return output
-
-
+	
 	
 func subscribe_to_event(event_Type,event_Name):
-
+	
 	
 	var playerUri ="http://" + IP.get_local_addresses()[1] + ":" + str(get_node("/root/response_server").get_port()) + "/player/event"
 	var gameid = get_node("/root/global").getCurrentGameId()
@@ -104,6 +102,14 @@ func get_player(playerID):
 	return response
 	
 
+func subcribe(channel, playerID):
+	#join lobby chat
+	var a = channel
+	var b = { "id": playerID,
+			  "subscribt_channels": [],
+	          "uri": ""
+	         }.to_json()
+	post(a, b)
 
 func checkServerConnection(serverAdress,port):
 	

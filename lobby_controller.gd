@@ -13,6 +13,7 @@ func _ready():
 func handle_request(verb, url, params, body_map, client):
 	if "POST" == verb:
 		if "/games/start" == url:
+			print("START GAME erhalten")
 			startGame()
 	pass
 	

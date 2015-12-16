@@ -21,8 +21,7 @@ func _ready():
 	get_node("Join").connect("pressed",self,"join_game")
 	get_node("CreateButton").connect("pressed",self,"_create_game")
 	get_close_button().remove_and_skip()
-
-
+	
 	
 func join_game():
 	
@@ -34,7 +33,6 @@ func join_game():
 
 func refresh():
 	
-	
 	var games = global.games
 	get_node("ItemList").clear()
 	
@@ -45,7 +43,6 @@ func refresh():
 func _create_game():
 	controller._create_game()
 	global.goto_scene("res://lobby.scn")
-	
 	
 func _on_ItemList_item_selected( index ):
 	selected_item = index
