@@ -7,7 +7,10 @@ var global = null
 func _ready():
 	
 	global = get_node("/root/global")
+	
 	controller = get_node("/root/lobby_controller")
+	get_node("/root/response_server").add_service("/messages/send/"+global.currentGameId, controller)
+	controller.lobby = self
 	
 	get_node("ReadyButton").connect("pressed",self,"_onReadyPressed")
 	get_node("StartGame").connect("pressed",self,"_onStartPressed")
@@ -21,7 +24,11 @@ func refresh():
 
 	#print(controller.getGame())
 	var players = global.players
-	
+	if(players.size()>0 && players[0].id!=global.playerid):
+		get_node("StartGame").hide()
+	else:
+		get_node("StartGame").show()
+		
 	var allPlayersReady = true
 	get_node("ItemList").clear()
 	for player in players:
@@ -39,10 +46,12 @@ func _onReadyPressed():
 	
 func _onStartPressed():
 	controller.startGame()
+	controller.lobby = null
 	get_node("/root/global").goto_scene("res://game.scn")
 	
 func _leaveGame():
 	controller.leaveGame()
+	controller.lobby = null
 	get_node("/root/global").goto_scene("res://hud.scn") 
 
 func _on_PollTimer_timeout():

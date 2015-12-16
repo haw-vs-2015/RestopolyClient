@@ -133,9 +133,10 @@ func handle_request(request, client):
 	var url = header["url"]
 	var verb = header["verb"]
 	#TODO: parsen der Parameter mit :param?
-	print("handle_request: " + service)
-	if service in services:
-		services[service].handle_request(verb, url, "", request["body"], connection)
+	print("handle_request: " + url)
+	if url in services:
+		print("handle_request found: " + url)
+		services[url].handle_request(verb, url, "", request["body"], connection)
 	#ok()
 	# für alle anderen falschen ein 404 zurück 
 

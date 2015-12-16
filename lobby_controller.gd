@@ -3,19 +3,42 @@ extends Node
 
 var global = null
 var http = null
+var lobby = null
 
 func _ready():
-	
-	get_node("/root/response_server").add_service("games", self)
 	global = get_node("/root/global")
 	http = get_node("/root/http")
 	
 func handle_request(verb, url, params, body_map, client):
+	#need to make sure that lobby.scn is not null
+	
+	
 	if "POST" == verb:
-		if "/games/start" == url:
+		var message_id = body_map["reason"]
+		if "start_game" == message_id:
 			print("START GAME erhalten")
 			startGame()
-	pass
+		elif "update_players" == message_id:
+			#use lobby.scn here
+			
+			var dic = {}
+			dic.parse_json(body_map["payload"])
+			print(str(dic))
+			global.players = dic["players"]
+			if lobby != null:
+				lobby.refresh()
+			
+		elif "chat_message" == message_id:
+			print("Neue Nachricht erhalten")
+			if lobby != null:
+				lobby.get_node("Chat").get_node("ItemList").add_item(body_map["id"] + ": " + body_map["payload"])
+		
+		elif "player_turn" == message_id:
+			print("TURN RECIEVED")
+			get_node("/root/global").setMyTurn(true)
+			if get_node("/root").has_node("Game") == true :
+				get_node("/root/Game/Overlay").set_turn_pressable()
+		pass
 	
 func startGame():
 	
@@ -38,7 +61,7 @@ func leaveGame():
 
 
 	var gameId = global.getCurrentGameId()
-	var playerId = global.playerid
+	var playerID = global.playerid
 
-	var response = http.delete("/games/" + gameId + "/players/" + playerId)
+	var response = http.delete("/games/" + str(gameId) + "/players/" + str(playerID))
 	return response

@@ -27,9 +27,11 @@ func rollDice():
 
 	return rolls 
 
-
+func send_end_turn_ready():
+	http.put("/games/"+global.currentGameId+"/players/"+global.playerid+"/ready")
+	
+	
 func send_roll_to_server(rolls):
-
 
 	var playerId = global.playerid
 	var gameId = global.getCurrentGameId()

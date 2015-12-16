@@ -38,6 +38,7 @@ func _roll():
 
 func _end_turn():
 	get_node("End Turn").set_disabled(true)
+	controller.send_end_turn_ready()
 
 
 func set_turn_pressable():

@@ -7,15 +7,15 @@ var controller = null
 
 func _ready():
 	
-	controller = get_node("/root/server_browser_controller")
-	
 	global = get_node("/root/global")
+	
+	controller = get_node("/root/server_browser_controller")
+	controller.server_browser = self
 	
 	randomize()
 	get_node("PlayerNameInput").set_text( str( randi()%1000 ))
 	
 	global.setPlayerName(get_node("PlayerNameInput").get_text())
-	refresh()
 	
 	#get_node("Refresh").connect("pressed",self,"refresh")
 	get_node("Join").connect("pressed",self,"join_game")
@@ -29,6 +29,7 @@ func join_game():
 	if(selected_item != -1):
 		global.setCurrentGameId(get_node("ItemList").get_item_text(selected_item))
 		controller._join_game()
+		controller.server_browser = null
 		global.goto_scene("res://lobby.scn")
 
 func refresh():
@@ -42,6 +43,7 @@ func refresh():
 
 func _create_game():
 	controller._create_game()
+	controller.server_browser = null
 	global.goto_scene("res://lobby.scn")
 	
 func _on_ItemList_item_selected( index ):

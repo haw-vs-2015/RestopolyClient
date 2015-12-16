@@ -6,7 +6,6 @@ var map = {}
 func _ready():
 	get_node("Button").connect("pressed",self,"_onSendPressed")
 	get_node("LineEdit").connect("input_event",self,"_onSendPressed")
-	get_node("/root/chat_controller").chat_ui = self
 
 
 func _onSendPressed():
@@ -14,10 +13,10 @@ func _onSendPressed():
 	var gameid = get_node("/root/global").getCurrentGameId()
 	var playeruri = get_node("/root/global").playerUri
 	
-	var a = "/messages/send/lobby" + str(gameid)
+	var a = "/messages/send/" + str(gameid)
 
 	var b = { "id":playerid,
-			  "reason":"message",
+			  "reason":"chat_message",
 			  "sourceURI":playeruri,
 			  "payload":get_node("LineEdit").get_text()
 			}.to_json()
