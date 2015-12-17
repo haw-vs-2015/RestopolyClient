@@ -17,7 +17,9 @@ func handle_request(verb, url, params, body_map, client):
 		var message_id = body_map["reason"]
 		if "start_game" == message_id:
 			print("START GAME erhalten")
-			startGame()
+			if lobby != null:
+				lobby.start_game()
+			
 		elif "update_players" == message_id:
 			#use lobby.scn here
 			
@@ -40,7 +42,7 @@ func handle_request(verb, url, params, body_map, client):
 				get_node("/root/Game/Overlay").set_turn_pressable()
 		pass
 	
-func startGame():
+func send_start_game():
 	
 	var gameId = global.getCurrentGameId()
 	

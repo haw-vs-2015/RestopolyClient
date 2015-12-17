@@ -31,6 +31,7 @@ func refresh():
 		
 	var allPlayersReady = true
 	get_node("ItemList").clear()
+	
 	for player in players:
 		if(player["ready"] == false):
 			allPlayersReady = false
@@ -43,11 +44,13 @@ func refresh():
 func _onReadyPressed():
 	controller.setPlayerReady()
 	
-	
-func _onStartPressed():
-	controller.startGame()
+
+func start_game():
 	controller.lobby = null
 	get_node("/root/global").goto_scene("res://game.scn")
+	
+func _onStartPressed():
+	controller.send_start_game()
 	
 func _leaveGame():
 	controller.leaveGame()
