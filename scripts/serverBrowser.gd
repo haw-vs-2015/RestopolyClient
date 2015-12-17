@@ -40,7 +40,10 @@ func refresh():
 	for game in games:
 		get_node("ItemList").add_item(game["gameid"])
 		get_node("ItemList").set_item_metadata(get_node("ItemList").get_item_count() -1,game["gameid"])
-	get_node("ItemList").select(selected_item)
+	#Buggy selection wird entfernt bei refresh es müsste eine
+	# distinct operation angewendet werden um die aktuelle auswahl zu behalten falls genau dieses
+	# game nicht entfernt wurde
+	#get_node("ItemList").select(selected_item)
 
 
 func _create_game():

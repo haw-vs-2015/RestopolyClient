@@ -41,7 +41,7 @@ func _process(delta):
 			
 			#read header
 			header = peerstream.get_var()
-			print("IN HEADER: " + header)
+			#print("IN HEADER: " + header)
 			#while(header.substr(header.length()-4, header.length()) != "\r\n\r\n"):
 			#	header += connection.get_data(1)[1].get_string_from_utf8()
 				#print(header)
@@ -133,9 +133,9 @@ func handle_request(request, client):
 	var url = header["url"]
 	var verb = header["verb"]
 	#TODO: parsen der Parameter mit :param?
-	print("handle_request: " + url)
+	#print("handle_request: " + url)
 	if url in services:
-		print("handle_request found: " + url)
+		#print("handle_request found: " + url)
 		services[url].handle_request(verb, url, "", request["body"], connection)
 	#ok()
 	# für alle anderen falschen ein 404 zurück 

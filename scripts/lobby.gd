@@ -44,7 +44,6 @@ func refresh():
 func _onReadyPressed():
 	controller.setPlayerReady()
 	
-
 func start_game():
 	controller.lobby = null
 	get_node("/root/global").goto_scene("res://game.scn")
