@@ -18,7 +18,7 @@ func _ready():
 	get_node("Roll Dice").set_disabled(!get_node("/root/global").getMyTurn())
 	get_node("End Turn").connect("pressed",self,"_end_turn")
 	get_node("End Turn").set_disabled(!get_node("/root/global").getMyTurn())
-#	displayCards()
+	get_node("/root/lobby_controller").overlay = self
 	pass
 	
 	
@@ -40,7 +40,10 @@ func _end_turn():
 	get_node("End Turn").set_disabled(true)
 	controller.send_end_turn_ready()
 
-
+func set_turn_unpressable():
+	get_node("End Turn").set_disabled(true)
+	get_node("Roll Dice").set_disabled(true)
+	
 func set_turn_pressable():
 	get_node("End Turn").set_disabled(false)
 	get_node("Roll Dice").set_disabled(false)

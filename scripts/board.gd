@@ -50,16 +50,15 @@ func _ready():
 	get_node("Super Tax"),
 	get_node("Racecourse Road")]
 	
-	print(positions)
-	print(positions[0].get_translation())
+	get_node("/root/lobby_controller").board = self
 	#Get list of players and span a figure for each of them on the field
 	#TODO sollte vielleicht global gespeichert werden, keine gute loesung
 	var players = get_node("/root/global").players
 	for player in players:
 		var figure_instance = figure.instance()
-		figure_instance.set_name(player["name"])
+		figure_instance.set_name(player["id"])
 		add_child(figure_instance)
-		put_player_on_field(player["name"],0)
+		put_player_on_field(player["id"],0)
 	set_fixed_process(true)
 
 
@@ -81,7 +80,7 @@ func _fixed_process(delta):
 #	get_node("Die Figur").set_translation(player_position)
 #
 
-func put_player_on_field(player,field):
+func put_player_on_field(player_id,field):
 	var position  = positions[field].get_position()
-	get_node(player).set_translation(position)
+	get_node(player_id).set_translation(position)
 	
