@@ -4,6 +4,7 @@ extends Node
 var global = null
 var http = null
 var lobby = null
+var board = null # wenn board da ist, einfügen
 
 func _ready():
 	global = get_node("/root/global")
