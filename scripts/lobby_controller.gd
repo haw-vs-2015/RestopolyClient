@@ -42,9 +42,9 @@ func handle_request(verb, url, params, body_map, client):
 		elif "chat_message" == message_id:
 			print("Neue Nachricht erhalten")
 			if lobby != null && overlay == null:
-				lobby.get_node("Chat").get_node("ItemList").add_item(body_map["id"] + ": " + body_map["payload"])
+				lobby.get_node("Chat").add_message(body_map["id"] + ": " + body_map["payload"])
 			if(overlay != null):
-				overlay.get_node("Chat").get_node("ItemList").add_item(body_map["id"] + ": " + body_map["payload"])
+				overlay.get_node("Chat").add_message(body_map["id"] + ": " + body_map["payload"])
 		elif "player_turn" == message_id:
 			print("TURN RECIEVED")
 			get_node("/root/global").setMyTurn(true)

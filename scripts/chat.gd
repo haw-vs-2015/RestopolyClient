@@ -6,7 +6,8 @@ var map = {}
 func _ready():
 	get_node("Button").connect("pressed",self,"_onSendPressed")
 	get_node("LineEdit").connect("input_event",self,"_onSendPressed")
-
+	get_node("RichTextLabel").set_selection_enabled(true)
+	get_node("RichTextLabel").set_scroll_follow(true)
 
 func _onSendPressed():
 	var playerid = get_node("/root/global").playerid
@@ -23,3 +24,7 @@ func _onSendPressed():
 			
 	get_node("/root/http").post(a, b)
 	get_node("LineEdit").set_text("")
+	
+func add_message(message):
+	get_node("RichTextLabel").add_text(message)
+	get_node("RichTextLabel").newline()
