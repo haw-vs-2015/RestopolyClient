@@ -30,19 +30,21 @@ func handle_request(verb, url, params, body_map, client):
 			global.players = dic["players"]
 			if lobby != null:
 				lobby.refresh()
-			if overlay != null:	
+			
+			if overlay != null:
 				print("OVERLAY IS NOT NULL\n")
-				print("Global Player ID = " + global.players[global.players.size()-1]["id"])
-				if global.players[global.players.size()-1]["id"] == global.playerid:
-						overlay.set_turn_pressable()
+				print("Global Player ID = " + global.players[0]["id"])
+				if global.players[0]["id"] == global.playerid:
+					overlay.set_turn_pressable()
 				else:
 					overlay.set_turn_unpressable()
 				
 		elif "chat_message" == message_id:
 			print("Neue Nachricht erhalten")
-			if lobby != null:
+			if lobby != null && overlay == null:
 				lobby.get_node("Chat").get_node("ItemList").add_item(body_map["id"] + ": " + body_map["payload"])
-		
+			if(overlay != null):
+				overlay.get_node("Chat").get_node("ItemList").add_item(body_map["id"] + ": " + body_map["payload"])
 		elif "player_turn" == message_id:
 			print("TURN RECIEVED")
 			get_node("/root/global").setMyTurn(true)

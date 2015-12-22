@@ -37,9 +37,11 @@ func refresh():
 			allPlayersReady = false
 			
 		get_node("ItemList").add_item(player["name"] + "  " + str(player["ready"]))
-		
+
 	if(allPlayersReady):
 		get_node("StartGame").set_disabled(false)
+	else:
+		get_node("StartGame").set_disabled(true)
 
 func _onReadyPressed():
 	controller.setPlayerReady()
