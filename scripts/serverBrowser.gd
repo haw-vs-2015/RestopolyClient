@@ -11,7 +11,7 @@ func _ready():
 	
 	controller = get_node("/root/server_browser_controller")
 	controller.server_browser = self
-	
+
 	randomize()
 	get_node("PlayerNameInput").set_text( str( randi()%1000 ))
 	
@@ -33,14 +33,14 @@ func join_game():
 		global.goto_scene("res://lobby.scn")
 
 func refresh():
-	
+	controller.get_games()
 	var games = global.games
 	get_node("ItemList").clear()
 	
 	for game in games:
-		if !game["started"]:
-			get_node("ItemList").add_item(game["gameid"])
-			get_node("ItemList").set_item_metadata(get_node("ItemList").get_item_count() -1,game["gameid"])
+		if !games[game]["started"]: # removed becaus it couldnt be accessed 
+			get_node("ItemList").add_item(games[game]["name"])
+			get_node("ItemList").set_item_metadata(get_node("ItemList").get_item_count() -1,games[game]["name"])
 	#Buggy selection wird entfernt bei refresh es müsste eine
 	# distinct operation angewendet werden um die aktuelle auswahl zu behalten falls genau dieses
 	# game nicht entfernt wurde

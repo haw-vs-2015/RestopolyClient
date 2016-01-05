@@ -7,11 +7,11 @@ var myTurn = false;
 var money = 0
 var cards = []
 var responsePort = 3560
-var ha_proxy = "31.16.249.90"
+var ha_proxy = "127.0.0.1"
 var ha_proxy_port = 4567
 var playerUri ="http://" + IP.get_local_addresses()[1] + ":" + str(responsePort)
 var players = []
-var games = []
+var games = {}
 #var yellow_pages = "https://vs-docker.informatik.haw-hamburg.de/ports/8053/services"
 
 

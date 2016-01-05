@@ -32,17 +32,24 @@ func handle_request(verb, url, params, body_map, client):
 	pass
 
 func get_game():
-
+	print("GETGAMES GAMES = " + str(global.games))
 	var gameId = global.getCurrentGameId()
-	var response = http.get("/games/" + str(gameId))
+	var gameUri = global.games[gameId]["uri"]
+	var response = http.get(gameUri)
 	return response
 	
 	
 func get_games():
 	
+	var games = {}
+	
 	#print("GET GAMES TRIGGERED")
 	#print("ServerAdress  = " + serverAdress)
 	var response = http.get("/games")
+	for game in response["games"]:
+		games[game["name"]]= game
+	print(games.to_json())
+	global.games = games
 	return response["games"]
 	
 	
