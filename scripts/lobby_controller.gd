@@ -64,18 +64,15 @@ func handle_request(verb, url, params, body_map, client):
 	
 func send_start_game():
 	
-	var gameId = global.getCurrentGameId()
-	
-	var response = http.put("/games/" + gameId + "/start" )
+	var response = http.put(global.gameUri + "/start" )
 	return response
 	
 	
 func setPlayerReady():
 	
-	var gameId = global.getCurrentGameId()
 	var playerId = global.playerid
 	
-	var response = http.put("/games/" + gameId +  "/players/" + playerId + "/ready")
+	var response = http.put(global.gameUri +  "/players/" + playerId + "/ready")
 	return response
 	
 	

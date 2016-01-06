@@ -14,13 +14,14 @@ func rollDice():
 
 	#TODO http request liefert die response, sollten die errors abgefangen werden?
 	var dices = [0,0]
-	var response1 = http.get("/dice")
+	print(global.game["components"]["dice"])
+	var response1 = http.get(global.game["components"]["dice"])["body"]
 	
 	var rolls = {}
 	rolls["roll1"] = response1
 	dices[0] = response1["number"]
 
-	var response2 = http.get("/dice")
+	var response2 = http.get(global.game["components"]["dice"])["body"]
 	
 	dices[1] = response1["number"]
 	rolls["roll2"] = response2
@@ -28,15 +29,15 @@ func rollDice():
 	return rolls 
 
 func send_end_turn_ready():
-	http.put("/games/"+global.currentGameId+"/players/"+global.playerid+"/ready")
+	http.put(global.game["uri"] + "/players/"+global.playerid+"/ready")
 	
 	
 func send_roll_to_server(rolls):
 
 	var playerId = global.playerid
-	var gameId = global.getCurrentGameId()
-	var adress = "/boards/" + gameId  +  "/players/" + playerId +  "/roll"
-	var new_board = http.post(adress, rolls.to_json())
-
+	print(global.game["components"]["board"])
+	var adress = global.game["components"]["board"]  +  "/players/" + playerId +  "/roll"
+	var new_board = http.post(adress, rolls.to_json())["body"]
+	print(new_board)
 	#print(new_board.to_json())
 	return new_board

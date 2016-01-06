@@ -2,16 +2,22 @@ extends Node
 
 var playerid = null
 var playerName = null
-var currentGameId = null
+
+var gameUri = null
+
 var myTurn = false;
 var money = 0
 var cards = []
 var responsePort = 3560
-var ha_proxy = "127.0.0.1"
+var ha_proxy = "141.22.88.102"
 var ha_proxy_port = 4567
 var playerUri ="http://" + IP.get_local_addresses()[1] + ":" + str(responsePort)
 var players = []
+
 var games = {}
+var game = null
+
+var ip = "http://" + ha_proxy + ":" + str(ha_proxy_port)
 #var yellow_pages = "https://vs-docker.informatik.haw-hamburg.de/ports/8053/services"
 
 
@@ -105,10 +111,3 @@ func setPlayerName(name):
 	
 func getPlayerName():
 	return playerName
-	
-func setCurrentGameId(gameId):
-	currentGameId = gameId
-	
-func getCurrentGameId():
-	return currentGameId
-	

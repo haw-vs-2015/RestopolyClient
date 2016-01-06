@@ -9,7 +9,7 @@ func _ready():
 	global = get_node("/root/global")
 	
 	controller = get_node("/root/lobby_controller")
-	get_node("/root/response_server").add_service("/messages/send/"+global.currentGameId, controller)
+	get_node("/root/response_server").add_service("/messages/send/"+global.game["gameid"], controller)
 	controller.lobby = self
 	
 	get_node("ReadyButton").connect("pressed",self,"_onReadyPressed")

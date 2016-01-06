@@ -11,10 +11,10 @@ func _ready():
 
 func _onSendPressed():
 	var playerid = get_node("/root/global").playerid
-	var gameid = get_node("/root/global").getCurrentGameId()
+	var gameid = get_node("/root/global").game["gameid"]
 	var playeruri = get_node("/root/global").playerUri
 	
-	var a = "/messages/send/" + str(gameid)
+	var a = get_node("/root/global").ip + "/messages/send/" + str(gameid)
 
 	var b = { "id":playerid,
 			  "reason":"chat_message",

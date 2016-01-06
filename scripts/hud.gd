@@ -6,7 +6,6 @@ var card = preload("res://card.scn")
 
 func _ready():
 	
-	
 	get_node("MultiplayerHUD/ServerBrowser").popup()
 
 	var screen_size = get_viewport_rect().size

@@ -27,7 +27,6 @@ func join_game():
 	
 	
 	if(selected_item != -1):
-		global.setCurrentGameId(get_node("ItemList").get_item_text(selected_item))
 		controller._join_game()
 		controller.server_browser = null
 		global.goto_scene("res://lobby.scn")

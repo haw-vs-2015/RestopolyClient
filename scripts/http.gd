@@ -18,49 +18,70 @@ func _init():
 func _ready():
 	serverAdress = get_node("/root/global").get_ha_proxy()
 	port = get_node("/root/global").get_ha_proxy_port()
-	#print("Adress = " + serverAdress)
 
 func get(adress):
-	checkServerConnection(serverAdress, port)
 	
-	http.request(HTTPClient.METHOD_GET, adress, headers)
 	
-	var output = {}
-	output.parse_json(getResponse())
-	#print("OUTPUT ------------> " + output.to_json())
-	return output
+	var uri = adress.replace("http://", "")
+	var serverAdress1 = uri.split("/", true)[0]
+	var serverAdress = serverAdress1.split(":", true)
+	var link = uri.replace(serverAdress[0]+":"+serverAdress[1],"")
+	print(serverAdress)
+	
+	checkServerConnection(serverAdress[0], int(serverAdress[1]))
+	http.request(HTTPClient.METHOD_GET,link,headers)
+	
+	#checkServerConnection(serverAdress, port)
+	#http.request(HTTPClient.METHOD_GET, adress, headers)
+	
+	return getResponse()
 	
 func put(adress):
-	checkServerConnection(serverAdress, port)
 	
-	http.request(HTTPClient.METHOD_PUT, adress, headers)
+	var uri = adress.replace("http://", "")
+	var serverAdress1 = uri.split("/", true)[0]
+	var serverAdress = serverAdress1.split(":", true)
+	print(adress)
+	var link = uri.replace(serverAdress[0]+":"+serverAdress[1],"")
 	
-	var output = {}
-	output.parse_json(getResponse())
-	#print("OUTPUT ------------> " + output.to_json())
-	return output
+	checkServerConnection(serverAdress[0], int(serverAdress[1]))
+	http.request(HTTPClient.METHOD_PUT,link,headers)
+	
+	
+	#checkServerConnection(serverAdress, port)
+	#http.request(HTTPClient.METHOD_PUT, adress, headers)
+	
+	return getResponse()
 	
 func delete(adress):
-	checkServerConnection(serverAdress, port)
 	
-	http.request(HTTPClient.METHOD_DELETE, adress, headers)
 	
-	var output = {}
-	output.parse_json(getResponse())
-	#print("OUTPUT ------------> " + output.to_json())
-	return output
-
+	var uri = adress.replace("http://", "")
+	var serverAdress1 = uri.split("/", true)[0]
+	var serverAdress = serverAdress1.split(":", true)
+	var link = uri.replace(serverAdress[0]+":"+serverAdress[1],"")
+	
+	checkServerConnection(serverAdress[0], int(serverAdress[1]))
+	http.request(HTTPClient.METHOD_DELETE,link,headers)
+	
+	
+	
+	#checkServerConnection(serverAdress, port)
+	#http.request(HTTPClient.METHOD_DELETE, adress, headers)
+	
+	return getResponse()
+	
 func post(adress, body):
-	#print("SEND BODY TRIGGERD")
+	var uri = adress.replace("http://", "")
+	var serverAdress1 = uri.split("/", true)[0]
+	var serverAdress = serverAdress1.split(":", true)
+	var link = uri.replace(serverAdress[0]+":"+serverAdress[1],"")
 	
-	checkServerConnection(serverAdress,port)
-	http.request(HTTPClient.METHOD_POST,adress,headers, body)
+	checkServerConnection(serverAdress[0], int(serverAdress[1]))
+	http.request(HTTPClient.METHOD_POST,link,headers, body)
 	
-	var output = {}
-	output.parse_json(getResponse())
-	#print("OUTPUT ------------> " + output.to_json())
-	return output
-	
+	return getResponse()
+
 	
 func subscribe_to_event(event_Type,event_Name):
 	
@@ -89,7 +110,7 @@ func subscribe_to_event(event_Type,event_Name):
 func get_player(playerID):
 
 	
-	checkServerConnection(serverAdress,port)
+	checkServerConnection(serverAdress, port)
 	var gameId = get_node("/root/global").getCurrentGameId()
 	
 	http.request(HTTPClient.METHOD_GET,"/games/" + gameId +"/players/" + playerID,headers)
@@ -112,17 +133,16 @@ func subcribe(channel, playerID):
 	post(a, b)
 
 func checkServerConnection(serverAdress,port):
-	
-	
+	print("AAAA")
 	var err = http.connect(serverAdress,port) # Connect to host/port
-	
+	print("AAAAA" + str(err))
 	while( http.get_status()==HTTPClient.STATUS_CONNECTING or http.get_status()==HTTPClient.STATUS_RESOLVING):
 		http.poll()
 	
 	
 func getResponse():
-	
-	
+	var bodyDict = {} 
+	var rs = {}
 	# Keep polling until the request is going on
 	while (http.get_status() == HTTPClient.STATUS_REQUESTING):
 		http.poll()
@@ -139,5 +159,9 @@ func getResponse():
 			# Get a chunk
 			var chunk = http.read_response_body_chunk()
 			rb = rb + chunk # append to read bufer
-		var text = rb.get_string_from_ascii()
-		return text
+		var body = rb.get_string_from_ascii()
+		
+		rs["header"] = headers
+		bodyDict.parse_json(body)
+		rs["body"] = bodyDict
+		return rs
