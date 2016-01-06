@@ -72,7 +72,7 @@ func setPlayerReady():
 	
 	var playerId = global.playerid
 	
-	var response = http.put(global.gameUri +  "/players/" + playerId + "/ready")
+	var response = http.put(global.player["ready"])
 	return response
 	
 	

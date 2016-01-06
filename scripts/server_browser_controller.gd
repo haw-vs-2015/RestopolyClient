@@ -69,7 +69,7 @@ func _join_game(gameid):
 	var playerID = global.playerid
 	var gameId = global.getCurrentGameId()
 
-	var response = http.put(global.game["uri"] +  "/players/" + str(playerID) + "?name=" + playerName + "&uri=" + playerUri)
+	var response = http.put(global.game["players"] + str(playerID) + "?name=" + playerName + "&uri=" + playerUri)
 	
 	#TODO player name und id trennen! probleme bei spieler leaven und in mehreren spielen gleichzeitig sein
 	
@@ -84,7 +84,6 @@ func _join_game(gameid):
 	
 func _create_game():
 	
-	
 	# create game
 	global.gameUri = http.post(global.ip + "/games", "")["header"]["Location"]
 	global.game = http.get(global.gameUri)["body"]
@@ -97,8 +96,8 @@ func _create_game():
 	
 	#var request = "/games/" + str(gameId) +  "/players/" + playerID + "?name=" + playerName + "&uri=" + playerUri
 	#print("DEBBUG" + request)
-
-	var response = http.put(global.game["uri"] +  "/players/" + str(playerID) + "?name=" + playerName + "&uri=" + playerUri)
+	var response = http.put(global.game["players"] + "/" + str(playerID) + "?name=" + playerName + "&uri=" + playerUri)
+	global.player = response["body"]
 	
 	#join lobby chat
 	#http.subcribe("/messages/subscribe/" + str(gameId), playerID)

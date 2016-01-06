@@ -33,10 +33,14 @@ func refresh():
 	get_node("ItemList").clear()
 	
 	for player in players:
-		if(player["ready"] == false):
+		#print("aaaaaa" + get_node("/root/http").get(player["ready"])["body"])
+		var re= get_node("/root/http").get(player["ready"])["body"]
+		print(re)
+		if(re == "false"):
+			#http.get(player["ready"])["body"]
 			allPlayersReady = false
 			
-		get_node("ItemList").add_item(player["name"] + "  " + str(player["ready"]))
+		get_node("ItemList").add_item(player["name"] + "  " + re)
 
 	if(allPlayersReady):
 		get_node("StartGame").set_disabled(false)

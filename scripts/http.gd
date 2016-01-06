@@ -162,6 +162,9 @@ func getResponse():
 		var body = rb.get_string_from_ascii()
 		
 		rs["header"] = headers
-		bodyDict.parse_json(body)
-		rs["body"] = bodyDict
+		var err = bodyDict.parse_json(body)
+		if(err):
+			rs["body"] = body
+		else:
+			rs["body"] = bodyDict
 		return rs

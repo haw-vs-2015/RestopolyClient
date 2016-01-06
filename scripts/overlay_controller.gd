@@ -29,7 +29,7 @@ func rollDice():
 	return rolls 
 
 func send_end_turn_ready():
-	http.put(global.game["uri"] + "/players/"+global.playerid+"/ready")
+	http.put(global.player["ready"])
 	
 	
 func send_roll_to_server(rolls):

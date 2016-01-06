@@ -14,6 +14,7 @@ var ha_proxy_port = 4567
 var playerUri ="http://" + IP.get_local_addresses()[1] + ":" + str(responsePort)
 var players = []
 
+var player = null
 var games = {}
 var game = null
 
