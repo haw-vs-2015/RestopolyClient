@@ -96,7 +96,7 @@ func _create_game():
 	
 	#var request = "/games/" + str(gameId) +  "/players/" + playerID + "?name=" + playerName + "&uri=" + playerUri
 	#print("DEBBUG" + request)
-	var response = http.put(global.game["players"] + "/" + str(playerID) + "?name=" + playerName + "&uri=" + playerUri)
+	var response = http.put(global.game["players"] + str(playerID) + "?name=" + playerName + "&uri=" + playerUri)
 	global.player = response["body"]
 	
 	#join lobby chat

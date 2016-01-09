@@ -12,11 +12,9 @@ var mortage = 0
 var houseCost = 0
 var hotelCost = 0
 
-func _init():	
+func _init():
 	pass
-
 	
-
 	
 func _ready():
 	pass

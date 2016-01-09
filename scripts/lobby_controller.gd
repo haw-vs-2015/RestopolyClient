@@ -59,7 +59,6 @@ func handle_request(verb, url, params, body_map, client):
 					if field["players"] != [] :
 						for player in field["players"]:
 							board.put_player_on_field(player["id"],player["position"])
-
 		pass
 	
 func send_start_game():
