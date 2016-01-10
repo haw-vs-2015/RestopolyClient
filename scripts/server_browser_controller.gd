@@ -1,16 +1,12 @@
 
 extends Node
 
-var global = null
-var http = null
 var server_browser = null
 
 func _ready():
 	
 	get_node("/root/response_server").add_service("/id", self)
 	get_node("/root/response_server").add_service("/messages/send/update_games", self)
-	global = get_node("/root/global")
-	http = get_node("/root/http")
 	
 func handle_request(verb, url, params, body_map, client):
 	
@@ -32,20 +28,16 @@ func handle_request(verb, url, params, body_map, client):
 	pass
 
 func get_game():
-	print("GETGAMES GAMES = " + str(global.games))
-	var gameId = global.getCurrentGameId()
-	#var gameUri = global.games[gameId]["uri"]
-	var response = http.get(gameId)
+
+	var response = http.get(global.game["uri"])
 	return response
 	
 	
 func get_games():
-	
+	#TODO Event einbauen, polling entfernen?
+	#print("GETGAMES GAMES = " + str(global.games))
 	var games = {}
 	
-	#print("GET GAMES TRIGGERED")
-	#print("ServerAdress  = " + serverAdress)
-	#print(global.ip)
 	var response = http.get(global.ip + "/games")
 	
 	for game in response["body"]["games"]:
@@ -55,9 +47,6 @@ func get_games():
 	
 	
 func _join_game(gameid):
-
-	#print(global.games)
-	#print(global.games[get_node("ItemList").get_item_text(selected_item)]["id"])
 	
 	global.gameUri = global.games[gameid]["uri"]
 	global.game = http.get(global.gameUri)["body"]
@@ -72,7 +61,6 @@ func _join_game(gameid):
 	var response = http.put(global.game["players"] + str(playerID) + "?name=" + playerName + "&uri=" + playerUri)
 	
 	#TODO player name und id trennen! probleme bei spieler leaven und in mehreren spielen gleichzeitig sein
-	
 	
 	global.players = get_game()["players"]
 	

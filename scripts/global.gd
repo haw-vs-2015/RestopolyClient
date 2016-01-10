@@ -97,8 +97,8 @@ func update_progress():
   #  get_node("animation").seek(progress * len, true)
 
 func set_new_scene(scene_resource):
-    current_scene = scene_resource.instance()
-    get_node("/root").add_child(current_scene)
+	current_scene = scene_resource.instance()
+	get_node("/root").add_child(current_scene)
 
 func setMyTurn(boolean):
 	myTurn  = boolean

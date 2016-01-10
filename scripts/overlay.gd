@@ -3,12 +3,10 @@ extends Node2D
 #var cards[] = {}
 var card = preload("res://card.scn")
 var controller = null
-var global = null
 
 func _ready():
 
 	controller = get_node("/root/overlay_controller")
-	global = get_node("/root/global")
 	
 	var screen_size = get_viewport_rect().size
 	set_pos(Vector2(screen_size.x/2,screen_size.y/2))

@@ -2,11 +2,8 @@
 extends Panel
 
 var controller = null
-var global = null
 
 func _ready():
-	
-	global = get_node("/root/global")
 	
 	controller = get_node("/root/lobby_controller")
 	get_node("/root/response_server").add_service("/messages/send/"+global.game["gameid"], controller)
@@ -21,7 +18,8 @@ func _ready():
 	
 
 func refresh():
-
+	
+	#TODO Polling entfernen?
 	#print(controller.getGame())
 	var players = global.players
 	if(players.size()>0 && players[0].id!=global.playerid):
@@ -35,7 +33,7 @@ func refresh():
 	for player in players:
 		#print("aaaaaa" + get_node("/root/http").get(player["ready"])["body"])
 		var re= get_node("/root/http").get(player["ready"])["body"]
-		print(re)
+		#print(re)
 		if(re == "false"):
 			#http.get(player["ready"])["body"]
 			allPlayersReady = false

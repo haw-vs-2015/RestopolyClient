@@ -1,19 +1,15 @@
 
 extends Node
 
-var global = null
-var http = null
 var lobby = null
 var board = null # wenn board da ist, einfügen
 var overlay = null 
 
 func _ready():
-	global = get_node("/root/global")
-	http = get_node("/root/http")
+	pass
 	
 func handle_request(verb, url, params, body_map, client):
 	#need to make sure that lobby.scn is not null
-	
 	
 	if "POST" == verb:
 		var message_id = body_map["reason"]
@@ -63,6 +59,7 @@ func handle_request(verb, url, params, body_map, client):
 	
 func send_start_game():
 	
+	#TODO / entfernen und bei server hinzufügen?
 	var response = http.put(global.gameUri + "/start" )
 	return response
 	
@@ -77,8 +74,7 @@ func setPlayerReady():
 	
 func leaveGame():
 
-	var gameId = global.getCurrentGameId()
 	var playerID = global.playerid
-
-	var response = http.delete("/games/" + str(gameId) + "/players/" + str(playerID))
+	#TODO / entfernen und bei server hinzufügen?
+	var response = http.delete(global.game["uri"] + "/players/" + str(playerID))
 	return response

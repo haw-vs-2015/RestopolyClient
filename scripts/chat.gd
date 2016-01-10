@@ -21,7 +21,7 @@ func _onSendPressed():
 			  "sourceURI":playeruri,
 			  "payload":get_node("LineEdit").get_text()
 			}.to_json()
-			
+	#print(b)
 	get_node("/root/http").post(a, b)
 	get_node("LineEdit").set_text("")
 	

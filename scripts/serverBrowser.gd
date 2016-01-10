@@ -2,12 +2,9 @@
 extends WindowDialog
 
 var selected_item = -1
-var global = null
 var controller = null
 
 func _ready():
-	
-	global = get_node("/root/global")
 	
 	controller = get_node("/root/server_browser_controller")
 	controller.server_browser = self
